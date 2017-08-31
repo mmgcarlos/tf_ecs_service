@@ -72,3 +72,16 @@ variable "desired_count" {
   type        = "string"
   default     = "3"
 }
+
+# optional
+variable "path_conditions" {
+  description = "Defines path-based conditions for routing; separate by, eg. '/home,/home/*'"
+  type        = "list"
+  default     = ["*"]
+}
+
+variable "host_condition" {
+  description = "Defines host-based condition for rule (domain name)"
+  type        = "string"
+  default     = "*.*"
+}

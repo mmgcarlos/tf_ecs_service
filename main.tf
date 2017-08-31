@@ -4,7 +4,8 @@ module "listener_rule_home" {
   alb_listener_arn = "${var.alb_listener_arn}"
   target_group_arn = "${module.service.target_group_arn}"
 
-  host_condition    = "${var.env == "live" ? "${var.dns_domain}" : "${var.env}-${var.dns_domain}"}"
+  host_condition    = "${var.host_condition}"
+  path_conditions   = ["${var.path_conditions}"]
   starting_priority = "${var.alb_listener_rule_priority}"
 }
 
