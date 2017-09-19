@@ -33,7 +33,8 @@ variable "secrets" {
 
 variable "dns_domain" {
   type        = "string"
-  description = "The DNS domain"
+  description = "The DNS domain - unused, pending deletion"
+  default     = ""
 }
 
 variable "ecs_cluster" {
