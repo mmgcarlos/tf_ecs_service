@@ -86,3 +86,9 @@ variable "host_condition" {
   type        = "string"
   default     = "*.*"
 }
+
+variable "name_suffix" {
+  description = "Set a suffix that will be applied to the name in order that a component can have multiple services per environment"
+  type        = "string"
+  default     = ""
+}
