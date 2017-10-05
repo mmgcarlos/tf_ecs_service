@@ -68,3 +68,9 @@ variable "target_group_arn" {
   description = "The ALB target group for the service."
   type        = "string"
 }
+
+variable "logentries_token" {
+  description = "The Logentries token used to be able to get logs sent to a specific log set."
+  type        = "string"
+  default     = ""
+}
