@@ -1,3 +1,3 @@
-# tf_ecs_frontend_service
+# tf\_ecs\_service
 
-Full infrastructure definition for a service running on ECS with product name DNS and using a shared ALB.
+An ECS service with an ALB target group, suitable for routing to from an ALB.

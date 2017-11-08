@@ -1,14 +1,3 @@
-module "listener_rule_home" {
-  source = "github.com/mergermarket/tf_alb_listener_rules"
-
-  alb_listener_arn = "${var.alb_listener_arn}"
-  target_group_arn = "${module.service.target_group_arn}"
-
-  host_condition    = "${var.host_condition}"
-  path_conditions   = ["${var.path_conditions}"]
-  starting_priority = "${var.alb_listener_rule_priority}"
-}
-
 module "ecs_update_monitor" {
   source = "github.com/mergermarket/tf_ecs_update_monitor"
 
