@@ -63,3 +63,8 @@ variable "name_suffix" {
   type        = "string"
   default     = ""
 }
+
+variable "target_group_arn" {
+  description = "The ALB target group for the service."
+  type        = "string"
+}

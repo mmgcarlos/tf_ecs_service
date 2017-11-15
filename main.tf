@@ -8,14 +8,15 @@ module "ecs_update_monitor" {
 
 module "service" {
   source = "github.com/mergermarket/tf_load_balanced_ecs_service?ref=no-target-group"
-  
-  name            = "${var.env}-${lookup(var.release, "component")}${var.name_suffix}"
-  cluster         = "${var.ecs_cluster}"
-  task_definition = "${module.taskdef.arn}"
-  vpc_id          = "${var.platform_config["vpc"]}"
-  container_name  = "${lookup(var.release, "component")}${var.name_suffix}"
-  container_port  = "${var.port}"
-  desired_count   = "${var.desired_count}"
+
+  name             = "${var.env}-${lookup(var.release, "component")}${var.name_suffix}"
+  cluster          = "${var.ecs_cluster}"
+  task_definition  = "${module.taskdef.arn}"
+  vpc_id           = "${var.platform_config["vpc"]}"
+  container_name   = "${lookup(var.release, "component")}${var.name_suffix}"
+  container_port   = "${var.port}"
+  desired_count    = "${var.desired_count}"
+  target_group_arn = "${var.target_group_arn}"
 }
 
 module "taskdef" {
@@ -34,7 +35,7 @@ module "service_container_definition" {
   memory         = "${var.memory}"
   container_port = "${var.port}"
 
-  container_env  = "${merge(
+  container_env = "${merge(
     map(
       "LOGSPOUT_CLOUDWATCHLOGS_LOG_GROUP_STDOUT", "${var.env}-${lookup(var.release, "component")}${var.name_suffix}-stdout",
       "LOGSPOUT_CLOUDWATCHLOGS_LOG_GROUP_STDERR", "${var.env}-${lookup(var.release, "component")}${var.name_suffix}-stderr",
