@@ -12,7 +12,6 @@ module "service" {
   name             = "${var.env}-${lookup(var.release, "component")}${var.name_suffix}"
   cluster          = "${var.ecs_cluster}"
   task_definition  = "${module.taskdef.arn}"
-  vpc_id           = "${var.platform_config["vpc"]}"
   container_name   = "${lookup(var.release, "component")}${var.name_suffix}"
   container_port   = "${var.port}"
   desired_count    = "${var.desired_count}"
