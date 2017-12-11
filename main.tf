@@ -23,6 +23,7 @@ module "taskdef" {
 
   family                = "${var.env}-${lookup(var.release, "component")}${var.name_suffix}"
   container_definitions = ["${module.service_container_definition.rendered}"]
+  policy                = "${var.task_role_policy}"
 }
 
 module "service_container_definition" {
