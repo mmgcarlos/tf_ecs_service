@@ -81,7 +81,13 @@ variable "task_role_policy" {
   default     = <<END
 {
   "Version": "2012-10-17",
-  "Statement": []
+  "Statement": [
+    {
+      "Action": "*",
+      "Effect": "Deny",
+      "Resource": "*"
+    }
+  ]
 }
 END
 }
