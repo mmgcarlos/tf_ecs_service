@@ -26,7 +26,7 @@ module "taskdef" {
 }
 
 module "service_container_definition" {
-  source = "github.com/mergermarket/tf_ecs_container_definition.git"
+  source = "github.com/mergermarket/tf_ecs_container_definition"
 
   name           = "${lookup(var.release, "component")}${var.name_suffix}"
   image          = "${lookup(var.release, "image_id")}"
