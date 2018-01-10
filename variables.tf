@@ -74,3 +74,20 @@ variable "logentries_token" {
   type        = "string"
   default     = ""
 }
+
+variable "task_role_policy" {
+  description = "IAM policy document to apply to the tasks via a task role"
+  type        = "string"
+  default     = <<END
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "*",
+      "Effect": "Deny",
+      "Resource": "*"
+    }
+  ]
+}
+END
+}
