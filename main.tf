@@ -19,7 +19,7 @@ module "service" {
 }
 
 module "taskdef" {
-  source = "github.com/mergermarket/tf_ecs_task_definition_with_task_role"
+  source = "github.com/mergermarket/tf_ecs_task_definition_with_task_role?ref=awsvpc"
 
   family                = "${var.env}-${lookup(var.release, "component")}${var.name_suffix}"
   container_definitions = ["${module.service_container_definition.rendered}"]
