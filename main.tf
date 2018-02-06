@@ -36,7 +36,6 @@ module "service_container_definition" {
   container_port = "${var.port}"
   soft_ulimit    = "${var.soft_ulimit}"
 
-
   container_env = "${merge(
     map(
       "LOGSPOUT_CLOUDWATCHLOGS_LOG_GROUP_STDOUT", "${var.env}-${lookup(var.release, "component")}${var.name_suffix}-stdout",
