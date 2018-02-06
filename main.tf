@@ -34,6 +34,8 @@ module "service_container_definition" {
   cpu            = "${var.cpu}"
   memory         = "${var.memory}"
   container_port = "${var.port}"
+  soft_ulimit    = "${var.soft_ulimit}"
+
 
   container_env = "${merge(
     map(
