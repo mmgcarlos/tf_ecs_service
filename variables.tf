@@ -52,7 +52,7 @@ variable "memory" {
   description = "The memory reservation for the container in megabytes"
 }
 
-variable "soft_ulimit" {
+variable "nofile_soft_ulimit" {
   type        = "string"
   description = "The soft ulimit for the number of files in container",
   default     = "4096"

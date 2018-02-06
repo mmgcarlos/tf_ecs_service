@@ -29,12 +29,12 @@ module "taskdef" {
 module "service_container_definition" {
   source = "github.com/mergermarket/tf_ecs_container_definition"
 
-  name           = "${lookup(var.release, "component")}${var.name_suffix}"
-  image          = "${lookup(var.release, "image_id")}"
-  cpu            = "${var.cpu}"
-  memory         = "${var.memory}"
-  container_port = "${var.port}"
-  soft_ulimit    = "${var.soft_ulimit}"
+  name               = "${lookup(var.release, "component")}${var.name_suffix}"
+  image              = "${lookup(var.release, "image_id")}"
+  cpu                = "${var.cpu}"
+  memory             = "${var.memory}"
+  container_port     = "${var.port}"
+  nofile_soft_ulimit = "${var.nofile_soft_ulimit}"
 
   container_env = "${merge(
     map(
