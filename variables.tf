@@ -52,6 +52,12 @@ variable "memory" {
   description = "The memory reservation for the container in megabytes"
 }
 
+variable "nofile_soft_ulimit" {
+  type        = "string"
+  description = "The soft ulimit for the number of files in container",
+  default     = "4096"
+}
+
 variable "desired_count" {
   description = "The number of instances of the task definition to place and keep running."
   type        = "string"
