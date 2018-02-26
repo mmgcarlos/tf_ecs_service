@@ -109,3 +109,9 @@ variable "container_mountpoint" {
   type        = "map"
   default     = {}
 }
+
+variable "container_port_mappings" {
+  description = "JSON document containing an array of port mappings for the container defintion - if set port is ignored (optional)."
+  default     = ""
+  type        = "string"
+}
