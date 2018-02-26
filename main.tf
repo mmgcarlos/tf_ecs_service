@@ -36,7 +36,8 @@ module "service_container_definition" {
   memory             = "${var.memory}"
   container_port     = "${var.port}"
   nofile_soft_ulimit = "${var.nofile_soft_ulimit}"
-  mountpoint     = "${var.container_mountpoint}"
+  mountpoint         = "${var.container_mountpoint}"
+  port_mappings      = "${var.container_port_mappings}"
 
   container_env = "${merge(
     map(
