@@ -97,3 +97,15 @@ variable "task_role_policy" {
 }
 END
 }
+
+variable "taskdef_volume" {
+  description = "Map containing 'name' and 'host_path' used to add a volume mapping to the taskdef."
+  type        = "map"
+  default     = {}
+}
+
+variable "container_mountpoint" {
+  description = "Map containing 'sourceVolume', 'containerPath' and 'readOnly' (optional) to map a volume into a container."
+  type        = "map"
+  default     = {}
+}

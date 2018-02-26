@@ -24,6 +24,7 @@ module "taskdef" {
   family                = "${var.env}-${lookup(var.release, "component")}${var.name_suffix}"
   container_definitions = ["${module.service_container_definition.rendered}"]
   policy                = "${var.task_role_policy}"
+  volume                = "${var.taskdef_volume}"
 }
 
 module "service_container_definition" {
@@ -35,6 +36,7 @@ module "service_container_definition" {
   memory             = "${var.memory}"
   container_port     = "${var.port}"
   nofile_soft_ulimit = "${var.nofile_soft_ulimit}"
+  mountpoint     = "${var.container_mountpoint}"
 
   container_env = "${merge(
     map(
