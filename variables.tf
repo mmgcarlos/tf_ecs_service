@@ -115,3 +115,9 @@ variable "container_port_mappings" {
   default     = ""
   type        = "string"
 }
+
+variable "container_labels" {
+  description = "Additional docker labels to apply to the container."
+  type        = "map"
+  default     = {}
+}
