@@ -55,13 +55,13 @@ module "service_container_definition" {
     var.secrets
   )}"
 
-  labels {
-    component          = "${lookup(var.release, "component")}"
-    env                = "${var.env}"
-    team               = "${lookup(var.release, "team")}"
-    version            = "${lookup(var.release, "version")}"
-    "logentries.token" = "${var.logentries_token}"
-  }
+  labels = "${merge(map(
+    "component", var.release["component"],
+    "env", var.env,
+    "team", var.release["team"],
+    "version", var.release["version"],
+    "logentries.token", var.logentries_token
+  ), var.container_labels)}"
 }
 
 resource "aws_cloudwatch_log_group" "stdout" {
