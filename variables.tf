@@ -98,6 +98,12 @@ variable "task_role_policy" {
 END
 }
 
+variable "assume_role_policy" {
+  description = "A valid IAM policy for assuming roles - optional"
+  type        = "string"
+  default     = ""
+}
+
 variable "taskdef_volume" {
   description = "Map containing 'name' and 'host_path' used to add a volume mapping to the taskdef."
   type        = "map"
