@@ -1,3 +1,7 @@
+locals {
+  service_name = "${var.env}-${lookup(var.release, "component")}"
+}
+
 module "ecs_update_monitor" {
   source = "github.com/mergermarket/tf_ecs_update_monitor"
 
@@ -9,7 +13,7 @@ module "ecs_update_monitor" {
 module "service" {
   source = "github.com/mergermarket/tf_load_balanced_ecs_service?ref=no-target-group"
 
-  name                               = "${var.env}-${lookup(var.release, "component")}${var.name_suffix}"
+  name                               = "${local.service_name}${var.name_suffix}"
   cluster                            = "${var.ecs_cluster}"
   task_definition                    = "${module.taskdef.arn}"
   container_name                     = "${lookup(var.release, "component")}${var.name_suffix}"
@@ -23,7 +27,7 @@ module "service" {
 module "taskdef" {
   source = "github.com/mergermarket/tf_ecs_task_definition_with_task_role"
 
-  family                = "${var.env}-${lookup(var.release, "component")}${var.name_suffix}"
+  family                = "${local.service_name}${var.name_suffix}"
   container_definitions = ["${module.service_container_definition.rendered}"]
   policy                = "${var.task_role_policy}"
   assume_role_policy    = "${var.assume_role_policy}"
@@ -44,8 +48,8 @@ module "service_container_definition" {
 
   container_env = "${merge(
     map(
-      "LOGSPOUT_CLOUDWATCHLOGS_LOG_GROUP_STDOUT", "${var.env}-${lookup(var.release, "component")}${var.name_suffix}-stdout",
-      "LOGSPOUT_CLOUDWATCHLOGS_LOG_GROUP_STDERR", "${var.env}-${lookup(var.release, "component")}${var.name_suffix}-stderr",
+      "LOGSPOUT_CLOUDWATCHLOGS_LOG_GROUP_STDOUT", "${local.service_name}${var.name_suffix}-stdout",
+      "LOGSPOUT_CLOUDWATCHLOGS_LOG_GROUP_STDERR", "${local.service_name}${var.name_suffix}-stderr",
       "STATSD_HOST", "172.17.42.1",
       "STATSD_PORT", "8125",
       "STATSD_ENABLED", "true",
@@ -68,11 +72,27 @@ module "service_container_definition" {
 }
 
 resource "aws_cloudwatch_log_group" "stdout" {
-  name              = "${var.env}-${lookup(var.release, "component")}${var.name_suffix}-stdout"
+  name              = "${local.service_name}${var.name_suffix}-stdout"
   retention_in_days = "7"
 }
 
 resource "aws_cloudwatch_log_group" "stderr" {
-  name              = "${var.env}-${lookup(var.release, "component")}${var.name_suffix}-stderr"
+  name              = "${local.service_name}${var.name_suffix}-stderr"
   retention_in_days = "7"
+}
+
+resource "aws_cloudwatch_log_subscription_filter" "kinesis_log_stdout_stream" {
+  count           = "${var.log_subscription_arn != "" ? 1 : 0}"
+  name            = "kinesis-log-stdout-stream-${local.service_name}"
+  destination_arn = "${var.log_subscription_arn}"
+  log_group_name  = "${local.service_name}${var.name_suffix}-stdout"
+  filter_pattern  = ""
+}
+
+resource "aws_cloudwatch_log_subscription_filter" "kinesis_log_stderr_stream" {
+  count           = "${var.log_subscription_arn != "" ? 1 : 0}"
+  name            = "kinesis-log-stdout-stream-${local.service_name}"
+  destination_arn = "${var.log_subscription_arn}"
+  log_group_name  = "${local.service_name}${var.name_suffix}-stderr"
+  filter_pattern  = ""
 }

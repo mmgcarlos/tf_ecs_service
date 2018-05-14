@@ -54,7 +54,7 @@ variable "memory" {
 
 variable "nofile_soft_ulimit" {
   type        = "string"
-  description = "The soft ulimit for the number of files in container",
+  description = "The soft ulimit for the number of files in container"
   default     = "4096"
 }
 
@@ -84,7 +84,8 @@ variable "logentries_token" {
 variable "task_role_policy" {
   description = "IAM policy document to apply to the tasks via a task role"
   type        = "string"
-  default     = <<END
+
+  default = <<END
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -136,4 +137,9 @@ variable "deployment_minimum_healthy_percent" {
 variable "deployment_maximum_percent" {
   description = "The maximumPercent parameter represents an upper limit on the number of your service's tasks that are allowed in the RUNNING or PENDING state during a deployment, as a percentage of the desiredCount (rounded down to the nearest integer)."
   default     = "200"
+}
+
+variable "log_subscription_arn" {
+  description = "To enable logging to a kinesis stream"
+  default     = ""
 }
