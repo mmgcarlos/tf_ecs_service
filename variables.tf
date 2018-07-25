@@ -143,3 +143,23 @@ variable "log_subscription_arn" {
   description = "To enable logging to a kinesis stream"
   default     = ""
 }
+
+variable "allow_overnight_scaledown" {
+  description = "Allow service to be scaled down"
+  default     = false
+}
+
+variable "overnight_scaledown_min_count" {
+  description = "Minimum task count overnight"
+  default     = "0"
+}
+
+variable "overnight_scaledown_start_hour" {
+  description = "From when a service can be scaled down (Hour in UTC)"
+  default     = "23"
+}
+
+variable "overnight_scaledown_end_hour" {
+  description = "When to bring service back to full strength (Hour in UTC)"
+  default     = "06"
+}

@@ -96,3 +96,40 @@ resource "aws_cloudwatch_log_subscription_filter" "kinesis_log_stderr_stream" {
   log_group_name  = "${local.service_name}${var.name_suffix}-stderr"
   filter_pattern  = ""
 }
+
+resource "aws_appautoscaling_target" "ecs" {
+  count = "${var.allow_overnight_scaledown}"
+  min_capacity       = "${var.desired_count}"
+  max_capacity       = "${var.desired_count}"
+  resource_id        = "service/${var.ecs_cluster}/${local.service_name}${var.name_suffix}"
+  scalable_dimension = "ecs:service:DesiredCount"
+  service_namespace  = "ecs"
+}
+
+resource "aws_appautoscaling_scheduled_action" "scale_down" {
+  count = "${var.allow_overnight_scaledown}"
+  name = "scale_down"
+  service_namespace = "${aws_appautoscaling_target.ecs.service_namespace}"
+  resource_id = "${aws_appautoscaling_target.ecs.resource_id}"
+  scalable_dimension = "${aws_appautoscaling_target.ecs.scalable_dimension}"
+  schedule = "cron(*/5 ${var.overnight_scaledown_start_hour}-${var.overnight_scaledown_end_hour} ? * * *)"
+
+  scalable_target_action {
+    min_capacity = "${var.overnight_scaledown_min_count}"
+    max_capacity = "${var.overnight_scaledown_min_count}"
+  }
+}
+
+resource "aws_appautoscaling_scheduled_action" "scale_back_up" {
+  count = "${var.allow_overnight_scaledown}"
+  name = "scale_up"
+  service_namespace = "${aws_appautoscaling_target.ecs.service_namespace}"
+  resource_id = "${aws_appautoscaling_target.ecs.resource_id}"
+  scalable_dimension = "${aws_appautoscaling_target.ecs.scalable_dimension}"
+  schedule = "cron(10 ${var.overnight_scaledown_end_hour} ? * MON-FRI *)"
+
+  scalable_target_action {
+    min_capacity       = "${var.desired_count}"
+    max_capacity       = "${var.desired_count}"
+  }
+}
