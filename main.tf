@@ -112,7 +112,7 @@ resource "aws_appautoscaling_scheduled_action" "scale_down" {
   service_namespace = "${aws_appautoscaling_target.ecs.service_namespace}"
   resource_id = "${aws_appautoscaling_target.ecs.resource_id}"
   scalable_dimension = "${aws_appautoscaling_target.ecs.scalable_dimension}"
-  schedule = "cron(*/30 ${var.overnight_scaledown_start_hour}-${var.overnight_scaledown_end_hour} ? * * *)"
+  schedule = "cron(*/30 ${var.overnight_scaledown_start_hour}-${(var.overnight_scaledown_end_hour)-1} ? * * *)"
 
   scalable_target_action {
     min_capacity = "${var.overnight_scaledown_min_count}"
