@@ -98,7 +98,7 @@ resource "aws_cloudwatch_log_subscription_filter" "kinesis_log_stderr_stream" {
 }
 
 resource "aws_appautoscaling_target" "ecs" {
-  count = "${var.allow_overnight_scaledown}"
+  count              = "${var.allow_overnight_scaledown}"
   min_capacity       = "${var.desired_count}"
   max_capacity       = "${var.desired_count}"
   resource_id        = "service/${var.ecs_cluster}/${local.service_name}${var.name_suffix}"
@@ -107,12 +107,12 @@ resource "aws_appautoscaling_target" "ecs" {
 }
 
 resource "aws_appautoscaling_scheduled_action" "scale_down" {
-  count = "${var.allow_overnight_scaledown}"
-  name = "scale_down"
-  service_namespace = "${aws_appautoscaling_target.ecs.service_namespace}"
-  resource_id = "${aws_appautoscaling_target.ecs.resource_id}"
+  count              = "${var.allow_overnight_scaledown}"
+  name               = "scale_down"
+  service_namespace  = "${aws_appautoscaling_target.ecs.service_namespace}"
+  resource_id        = "${aws_appautoscaling_target.ecs.resource_id}"
   scalable_dimension = "${aws_appautoscaling_target.ecs.scalable_dimension}"
-  schedule = "cron(*/30 ${var.overnight_scaledown_start_hour}-${(var.overnight_scaledown_end_hour)-1} ? * * *)"
+  schedule           = "cron(*/30 ${var.overnight_scaledown_start_hour}-${(var.overnight_scaledown_end_hour)-1} ? * * *)"
 
   scalable_target_action {
     min_capacity = "${var.overnight_scaledown_min_count}"
@@ -121,15 +121,15 @@ resource "aws_appautoscaling_scheduled_action" "scale_down" {
 }
 
 resource "aws_appautoscaling_scheduled_action" "scale_back_up" {
-  count = "${var.allow_overnight_scaledown}"
-  name = "scale_up"
-  service_namespace = "${aws_appautoscaling_target.ecs.service_namespace}"
-  resource_id = "${aws_appautoscaling_target.ecs.resource_id}"
+  count              = "${var.allow_overnight_scaledown}"
+  name               = "scale_up"
+  service_namespace  = "${aws_appautoscaling_target.ecs.service_namespace}"
+  resource_id        = "${aws_appautoscaling_target.ecs.resource_id}"
   scalable_dimension = "${aws_appautoscaling_target.ecs.scalable_dimension}"
-  schedule = "cron(10 ${var.overnight_scaledown_end_hour} ? * MON-FRI *)"
+  schedule           = "cron(10 ${var.overnight_scaledown_end_hour} ? * MON-FRI *)"
 
   scalable_target_action {
-    min_capacity       = "${var.desired_count}"
-    max_capacity       = "${var.desired_count}"
+    min_capacity = "${var.desired_count}"
+    max_capacity = "${var.desired_count}"
   }
 }
