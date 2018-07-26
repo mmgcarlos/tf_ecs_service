@@ -156,7 +156,7 @@ variable "overnight_scaledown_min_count" {
 
 variable "overnight_scaledown_start_hour" {
   description = "From when a service can be scaled down (Hour in UTC)"
-  default     = "23"
+  default     = "22"
 }
 
 variable "overnight_scaledown_end_hour" {
