@@ -87,6 +87,7 @@ resource "aws_cloudwatch_log_subscription_filter" "kinesis_log_stdout_stream" {
   destination_arn = "${var.platform_config["datadog_log_subscription_arn"]}"
   log_group_name  = "${local.service_name}${var.name_suffix}-stdout"
   filter_pattern  = ""
+  depends_on      = ["aws_cloudwatch_log_group.stdout"]
 }
 
 resource "aws_cloudwatch_log_subscription_filter" "kinesis_log_stderr_stream" {
@@ -95,6 +96,7 @@ resource "aws_cloudwatch_log_subscription_filter" "kinesis_log_stderr_stream" {
   destination_arn = "${var.platform_config["datadog_log_subscription_arn"]}"
   log_group_name  = "${local.service_name}${var.name_suffix}-stderr"
   filter_pattern  = ""
+  depends_on      = ["aws_cloudwatch_log_group.stderr"]
 }
 
 resource "aws_appautoscaling_target" "ecs" {
