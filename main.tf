@@ -3,7 +3,7 @@ locals {
 }
 
 module "ecs_update_monitor" {
-  source = "github.com/mergermarket/tf_ecs_update_monitor"
+  source = "github.com/mergermarket/tf_ecs_update_monitor?ref=remove_deprecated_warnings"
 
   cluster = "${var.ecs_cluster}"
   service = "${module.service.name}"
@@ -11,7 +11,7 @@ module "ecs_update_monitor" {
 }
 
 module "service" {
-  source = "github.com/mergermarket/tf_load_balanced_ecs_service?ref=no-target-group"
+  source = "github.com/mergermarket/tf_load_balanced_ecs_service?ref=remove_deprecated_warnings"
 
   name                               = "${local.service_name}${var.name_suffix}"
   cluster                            = "${var.ecs_cluster}"
