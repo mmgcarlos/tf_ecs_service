@@ -32,6 +32,8 @@ module "taskdef" {
   policy                = "${var.task_role_policy}"
   assume_role_policy    = "${var.assume_role_policy}"
   volume                = "${var.taskdef_volume}"
+  env                   = "${var.env}"
+  release               = "${var.release}"
 }
 
 module "service_container_definition" {
@@ -45,6 +47,8 @@ module "service_container_definition" {
   nofile_soft_ulimit = "${var.nofile_soft_ulimit}"
   mountpoint         = "${var.container_mountpoint}"
   port_mappings      = "${var.container_port_mappings}"
+  team_secrets       = "${var.team_secrets}"
+  common_secrets     = "${var.common_secrets}"
 
   container_env = "${merge(
     map(

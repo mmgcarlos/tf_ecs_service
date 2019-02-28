@@ -163,3 +163,15 @@ variable "overnight_scaledown_end_hour" {
   description = "When to bring service back to full strength (Hour in UTC)"
   default     = "06"
 }
+
+variable "team_secrets" {
+  description = "A list of team specific secret names that can be found in aws secrets manager"
+  type        = "list"
+  default     = []
+}
+
+variable "common_secrets" {
+  description = "A list of common secret names that can be found in secrets manager"
+  type        = "list"
+  default     = []
+}
