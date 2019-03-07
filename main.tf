@@ -39,16 +39,16 @@ module "taskdef" {
 module "service_container_definition" {
   source = "github.com/mergermarket/tf_ecs_container_definition"
 
-  name               = "${lookup(var.release, "component")}${var.name_suffix}"
-  image              = "${lookup(var.release, "image_id")}"
-  cpu                = "${var.cpu}"
-  memory             = "${var.memory}"
-  container_port     = "${var.port}"
-  nofile_soft_ulimit = "${var.nofile_soft_ulimit}"
-  mountpoint         = "${var.container_mountpoint}"
-  port_mappings      = "${var.container_port_mappings}"
-  team_secrets       = "${var.team_secrets}"
-  common_secrets     = "${var.common_secrets}"
+  name                = "${lookup(var.release, "component")}${var.name_suffix}"
+  image               = "${lookup(var.release, "image_id")}"
+  cpu                 = "${var.cpu}"
+  memory              = "${var.memory}"
+  container_port      = "${var.port}"
+  nofile_soft_ulimit  = "${var.nofile_soft_ulimit}"
+  mountpoint          = "${var.container_mountpoint}"
+  port_mappings       = "${var.container_port_mappings}"
+  application_secrets = "${var.application_secrets}"
+  platform_secrets    = "${var.platform_secrets}"
 
   container_env = "${merge(
     map(

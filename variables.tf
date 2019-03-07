@@ -164,14 +164,14 @@ variable "overnight_scaledown_end_hour" {
   default     = "06"
 }
 
-variable "team_secrets" {
-  description = "A list of team specific secret names that can be found in aws secrets manager"
+variable "application_secrets" {
+  description = "A list of application specific secret names that can be found in aws secrets manager"
   type        = "list"
   default     = []
 }
 
-variable "common_secrets" {
-  description = "A list of common secret names that can be found in secrets manager"
+variable "platform_secrets" {
+  description = "A list of common secret names for \"the platform\" that can be found in secrets manager"
   type        = "list"
   default     = []
 }
