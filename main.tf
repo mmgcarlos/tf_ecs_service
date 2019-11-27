@@ -114,7 +114,7 @@ resource "aws_appautoscaling_target" "ecs" {
 
 resource "aws_appautoscaling_scheduled_action" "scale_down" {
   count              = "${var.allow_overnight_scaledown}"
-  name               = "scale_down"
+  name               = "scale_down-${local.service_name}${var.name_suffix}"
   service_namespace  = "${aws_appautoscaling_target.ecs.service_namespace}"
   resource_id        = "${aws_appautoscaling_target.ecs.resource_id}"
   scalable_dimension = "${aws_appautoscaling_target.ecs.scalable_dimension}"
@@ -128,7 +128,7 @@ resource "aws_appautoscaling_scheduled_action" "scale_down" {
 
 resource "aws_appautoscaling_scheduled_action" "scale_back_up" {
   count              = "${var.allow_overnight_scaledown}"
-  name               = "scale_up"
+  name               = "scale_up-${local.service_name}${var.name_suffix}"
   service_namespace  = "${aws_appautoscaling_target.ecs.service_namespace}"
   resource_id        = "${aws_appautoscaling_target.ecs.resource_id}"
   scalable_dimension = "${aws_appautoscaling_target.ecs.scalable_dimension}"
