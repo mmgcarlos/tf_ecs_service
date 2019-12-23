@@ -1,5 +1,5 @@
 locals {
-  service_name = "${var.env}-${lookup(var.release, "component")}"
+  service_name = "${var.env}-${replace(lookup(var.release, "component"), ".", "_")}"
 }
 
 module "ecs_update_monitor" {
