@@ -175,3 +175,16 @@ variable "platform_secrets" {
   type        = "list"
   default     = []
 }
+
+variable "network_mode" {
+  description = "Network mode valid values are: none, bridge, awsvpc, and host. Default is bridge (See: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html)"
+  type        = "string"
+  default     = "bridge"
+}
+
+variable "tags" {
+  description = "Tags added to the ecs service resource"
+  type = "map"
+  default = {
+  }
+}
