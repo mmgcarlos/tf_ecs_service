@@ -22,6 +22,7 @@ module "service" {
   target_group_arn                   = "${var.target_group_arn}"
   deployment_minimum_healthy_percent = "${var.deployment_minimum_healthy_percent}"
   deployment_maximum_percent         = "${var.deployment_maximum_percent}"
+  tags                               = "${var.tags}"
 }
 
 module "taskdef" {
