@@ -181,3 +181,13 @@ variable "network_mode" {
   type        = "string"
   default     = "bridge"
 }
+<<<<<<< Updated upstream
+=======
+
+variable "tags" {
+  description = "Tags added to the ecs service resource"
+  type = "map"
+  default = {
+  }
+}
+>>>>>>> Stashed changes
